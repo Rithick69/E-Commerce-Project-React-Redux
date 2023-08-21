@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import HeroSection from './components/HeroSection';
+import HeroSection from '../components/HeroSection';
 import { useDispatch } from 'react-redux';
-import { aboutHero } from './reducers/slices/heroSlice';
+import { aboutHero } from '../reducers/slices/heroSlice';
 // import Services from './Services';
 // import Contact from './Contact';
 
