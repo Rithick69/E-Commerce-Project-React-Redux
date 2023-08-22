@@ -7,6 +7,7 @@ import heroSlice from './reducers/slices/heroSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
+import productsSlice from './reducers/slices/productsSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-	users: heroSlice,
+	hero: heroSlice,
+	products: productsSlice,
 	// We can add more slices here
 });
 

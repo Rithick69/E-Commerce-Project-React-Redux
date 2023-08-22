@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const HeroSection = () => {
 	const { name, image } = useSelector((store) => {
-		return store.users;
+		return store.hero;
 	});
 	return (
 		<Wrapper>
