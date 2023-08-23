@@ -1,4 +1,4 @@
-// import React from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './views/Home';
 import About from './views/About';
@@ -11,6 +11,8 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { useDispatch } from 'react-redux';
+import { fetchData } from './reducers/slices/productsSlice';
 
 const App = () => {
 	const theme = {
@@ -37,6 +39,12 @@ const App = () => {
 			tab: '998px',
 		},
 	};
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchData());
+	}, [dispatch]);
 
 	return (
 		<>
