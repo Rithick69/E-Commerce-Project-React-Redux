@@ -1,22 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from '../reducers/slices/productsSlice';
-const Products = () => {
-	const dispatch = useDispatch();
+import { useSelector } from 'react-redux';
 
-	const { data, isLoading } = useSelector((store) => {
+const Products = () => {
+	const { products, isLoading } = useSelector((store) => {
 		return store.products;
 	});
-
-	useEffect(() => {
-		dispatch(fetchData());
-	}, [dispatch]);
 
 	if (!isLoading) {
 		return (
 			<div>
 				<p>Data: {isLoading}</p>
-				{data.map((curr, idx) => {
+				{products.map((curr, idx) => {
 					return <p key={idx}>{curr.name}</p>;
 				})}
 			</div>
