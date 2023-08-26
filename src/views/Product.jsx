@@ -10,6 +10,9 @@ import ProdImg from '../components/ProdImg';
 import { Container } from '../styles/Container';
 import FormatPrice from '../helpers/FormatPrice';
 
+import { MdSecurity } from 'react-icons/md';
+import { TbTruckDelivery, TbReplace } from 'react-icons/tb';
+
 const URL = 'https://api.pujakaitem.com/api/products';
 
 const Product = () => {
@@ -70,6 +73,39 @@ const Product = () => {
 							Deal of the Day: <FormatPrice price={price} />
 						</p>
 						<p>{description}</p>
+						<div className="product-data-warranty">
+							<div className="product-warranty-data">
+								<TbTruckDelivery className="warranty-icon" />
+								<p>Free Delivery</p>
+							</div>
+
+							<div className="product-warranty-data">
+								<TbReplace className="warranty-icon" />
+								<p>30 Days Replacement</p>
+							</div>
+
+							<div className="product-warranty-data">
+								<TbTruckDelivery className="warranty-icon" />
+								<p>Thapa Delivered </p>
+							</div>
+
+							<div className="product-warranty-data">
+								<MdSecurity className="warranty-icon" />
+								<p>2 Year Warranty </p>
+							</div>
+						</div>
+						<div className="product-data-info">
+							<p>
+								Available:{' '}
+								<span>{stock > 0 ? 'In Stock' : 'Out Of Stock'}</span>
+							</p>
+							<p>
+								ID : <span> {id} </span>
+							</p>
+							<p>
+								Brand :<span> {company} </span>
+							</p>
+						</div>
 					</div>
 				</div>
 			</Container>
