@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -6,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProd } from '../reducers/slices/singleProdSlice';
 import Pagnav from '../components/Pagnav';
 import ProdImg from '../components/ProdImg';
+import Star from '../components/Star';
+import AddToCart from '../components/AddToCart';
 
 import { Container } from '../styles/Container';
 import FormatPrice from '../helpers/FormatPrice';
@@ -59,6 +62,7 @@ const Product = () => {
 
 					<div className="product-data">
 						<h2>{name}</h2>
+						<Star stars={stars} reviews={reviews} />
 						<p>{stars}</p>
 						<p>{reviews} reviews</p>
 						<p className="product-data-price">
@@ -106,6 +110,8 @@ const Product = () => {
 								Brand :<span> {company} </span>
 							</p>
 						</div>
+						<hr />
+						{stock > 0 && <AddToCart prods={data} />}
 					</div>
 				</div>
 			</Container>
