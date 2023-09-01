@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
-import FeaturedProd from './FeaturedProd';
+import Prod from './Prod';
 const Featured = () => {
 	const { featured, isLoading } = useSelector((store) => {
 		return store.products;
@@ -17,7 +17,7 @@ const Featured = () => {
 				<div className="common-heading">Our Feature Services</div>
 				<div className="grid grid-three-column">
 					{featured.map((curr) => {
-						return <FeaturedProd key={curr.id} {...curr} />;
+						return <Prod key={curr.id} {...curr} />;
 					})}
 				</div>
 			</div>
