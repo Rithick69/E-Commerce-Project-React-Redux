@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
+// import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 const Pagnav = ({ title }) => {
+	// const location = useLocation();
+	// console.log(location.pathname.split('/')[1]);
 	return (
 		<Wrapper>
 			<NavLink to="/">Home</NavLink>/{title}
