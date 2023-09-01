@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import FormatPrice from '../helpers/FormatPrice';
 
-const FeaturedProd = (curr) => {
+const Prod = (curr) => {
 	const { id, name, image, price, category } = curr;
 	return (
 		<NavLink to={`/product/${id}`}>
@@ -24,4 +24,4 @@ const FeaturedProd = (curr) => {
 	);
 };
 
-export default FeaturedProd;
+export default Prod;
