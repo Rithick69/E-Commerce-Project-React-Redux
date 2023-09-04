@@ -3,6 +3,9 @@ import { styled } from 'styled-components';
 import Sort from '../components/Sort';
 import FilterSection from '../components/FilterSection';
 import ProductList from '../components/ProductList';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadFilterProds } from '../reducers/slices/filterSlice';
 
 const Products = () => {
 	// const { products, isLoading } = useSelector((store) => {
@@ -10,6 +13,20 @@ const Products = () => {
 	// });
 
 	// if (!isLoading) {
+
+	const { products } = useSelector((store) => {
+		return store.products;
+	});
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(
+			loadFilterProds({
+				products,
+			})
+		);
+	}, [products, dispatch]);
 	return (
 		<Wrapper>
 			<div className="container grid grid-filter-column">

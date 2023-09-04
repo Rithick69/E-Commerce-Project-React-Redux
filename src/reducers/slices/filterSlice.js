@@ -1,27 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const userSlice = createSlice({
-	name: 'user',
+const filterSlice = createSlice({
+	name: 'filter',
 	initialState: {
-		name: '',
-		image: '',
 		filter_products: [],
 		all_products: [],
 	},
 	reducers: {
-		homeHero(state, action) {
-			let { name, image } = action.payload;
-			state.name = name;
-			state.image = image;
-		},
-		aboutHero(state, action) {
-			let { name, image } = action.payload;
-			state.name = name;
-			state.image = image;
+		loadFilterProds(state, action) {
+			let { products } = action.payload;
+			state.filter_products = [...products];
+			state.all_products = [...products];
 		},
 	},
 });
 
-export const { homeHero, aboutHero } = userSlice.actions;
+export const { loadFilterProds } = filterSlice.actions;
 
-export default userSlice.reducer;
+export default filterSlice.reducer;
