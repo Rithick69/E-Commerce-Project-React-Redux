@@ -5,6 +5,7 @@ const filterSlice = createSlice({
 	initialState: {
 		filter_products: [],
 		all_products: [],
+		grid_view: true,
 	},
 	reducers: {
 		loadFilterProds(state, action) {
@@ -12,9 +13,12 @@ const filterSlice = createSlice({
 			state.filter_products = [...products];
 			state.all_products = [...products];
 		},
+		setGridView(state) {
+			state.grid_view = true;
+		},
 	},
 });
 
-export const { loadFilterProds } = filterSlice.actions;
+export const { loadFilterProds, setGridView } = filterSlice.actions;
 
 export default filterSlice.reducer;
