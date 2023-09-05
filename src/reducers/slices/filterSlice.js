@@ -13,12 +13,9 @@ const filterSlice = createSlice({
 			state.filter_products = [...products];
 			state.all_products = [...products];
 		},
-		setGridView(state) {
-			state.grid_view = true;
-		},
 	},
 });
 
-export const { loadFilterProds, setGridView } = filterSlice.actions;
+export const { loadFilterProds } = filterSlice.actions;
 
 export default filterSlice.reducer;

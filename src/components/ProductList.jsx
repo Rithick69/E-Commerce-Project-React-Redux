@@ -1,6 +1,7 @@
 // import React from 'react';
 import { useSelector } from 'react-redux';
 import GridView from './GridView';
+import ListView from './ListView';
 // import GridView from './GridView';
 
 const ProductList = () => {
@@ -8,15 +9,25 @@ const ProductList = () => {
 		return store.products;
 	});
 
-	const { filter_products, setGridView } = useSelector((store) => {
+	const { filter_products, grid_view } = useSelector((store) => {
 		return store.filterProd;
 	});
 
-	// console.log('filter', filter_products);
+	console.log('filter', grid_view);
 
 	if (isLoading) {
 		return <div>Loading .....</div>;
-	} else if (setGridView) return <GridView products={filter_products} />;
+	}
+	return (
+		<>
+			{grid_view ? (
+				<GridView products={filter_products} />
+			) : (
+				<ListView products={filter_products} />
+			)}
+		</>
+	);
+	// else if (setGridView) return <GridView products={filter_products} />;
 };
 
 export default ProductList;
