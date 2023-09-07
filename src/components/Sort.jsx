@@ -28,7 +28,28 @@ const Sort = () => {
 				<p>{`${filter_products.length} total products`}</p>
 			</div>
 
-			<div className="sort-selection">dropdown</div>
+			<div className="sort-selection">
+				<form action="#">
+					<label htmlFor="sort"></label>
+					<select className="sort-selection--style" name="sort" id="sort">
+						<option className="sort-select--option" value="lowest">
+							Price(lowest)
+						</option>
+						<option value="#" disabled></option>
+						<option className="sort-select--option" value="highest">
+							Price(highest)
+						</option>
+						<option value="#" disabled></option>
+						<option className="sort-select--option" value="a-z">
+							Price(a-z)
+						</option>
+						<option value="#" disabled></option>
+						<option className="sort-select--option" value="z-a">
+							Price(z-a)
+						</option>
+					</select>
+				</form>
+			</div>
 		</Wrapper>
 	);
 };
@@ -63,6 +84,12 @@ const Wrapper = styled.section`
 	.sort-selection .sort-selection--style {
 		padding: 0.5rem;
 		cursor: pointer;
+		background-color: #fff;
+		border: 1px solid black;
+
+		&:focus {
+			border: 2px solid black;
+		}
 
 		.sort-select--option {
 			padding: 0.5rem 0;
