@@ -13,9 +13,12 @@ const filterSlice = createSlice({
 			state.filter_products = [...products];
 			state.all_products = [...products];
 		},
+		setView(state, action) {
+			state.grid_view = action.payload.grid_view;
+		},
 	},
 });
 
-export const { loadFilterProds } = filterSlice.actions;
+export const { loadFilterProds, setView } = filterSlice.actions;
 
 export default filterSlice.reducer;
