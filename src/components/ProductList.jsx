@@ -13,8 +13,6 @@ const ProductList = () => {
 		return store.filterProd;
 	});
 
-	console.log('filter', grid_view);
-
 	if (isLoading) {
 		return <div>Loading .....</div>;
 	}

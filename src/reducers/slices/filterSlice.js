@@ -6,6 +6,7 @@ const filterSlice = createSlice({
 		filter_products: [],
 		all_products: [],
 		grid_view: true,
+		sorting_val: 'lowest',
 	},
 	reducers: {
 		loadFilterProds(state, action) {
@@ -16,9 +17,12 @@ const filterSlice = createSlice({
 		setView(state, action) {
 			state.grid_view = action.payload.grid_view;
 		},
+		getSortVal(state, action) {
+			state.sorting_val = action.payload.sortVal;
+		},
 	},
 });
 
-export const { loadFilterProds, setView } = filterSlice.actions;
+export const { loadFilterProds, setView, getSortVal } = filterSlice.actions;
 
 export default filterSlice.reducer;
