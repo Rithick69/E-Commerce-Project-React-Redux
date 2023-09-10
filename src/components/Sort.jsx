@@ -1,11 +1,16 @@
 import { styled } from 'styled-components';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { setView, getSortVal } from '../reducers/slices/filterSlice';
+import {
+	setView,
+	getSortVal,
+	sortingProducts,
+} from '../reducers/slices/filterSlice';
+import { useEffect } from 'react';
 
 const Sort = () => {
 	const dispatch = useDispatch();
-	const { grid_view, filter_products } = useSelector((store) => {
+	const { grid_view, filter_products, sorting_val } = useSelector((store) => {
 		return store.filterProd;
 	});
 
@@ -13,13 +18,17 @@ const Sort = () => {
 		let el = document.getElementById('sort');
 
 		let sort_value = el.options[el.selectedIndex].value;
-		console.log('hi', sort_value);
 		dispatch(
 			getSortVal({
-				sortVal: 'lowest',
+				sortVal: sort_value,
 			})
 		);
 	};
+
+	useEffect(() => {
+		dispatch(sortingProducts());
+	}, [sorting_val, dispatch]);
+
 	return (
 		<Wrapper>
 			<div className="sorting-list--grid">
@@ -47,7 +56,7 @@ const Sort = () => {
 						className="sort-selection--style"
 						name="sort"
 						id="sort"
-						onClick={() => sorting}
+						onClick={() => sorting()}
 					>
 						<option className="sort-select--option" value="lowest">
 							Price(lowest)

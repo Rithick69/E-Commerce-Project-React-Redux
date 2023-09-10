@@ -20,9 +20,50 @@ const filterSlice = createSlice({
 		getSortVal(state, action) {
 			state.sorting_val = action.payload.sortVal;
 		},
+		sortingProducts(state) {
+			let newSortData;
+			let tempArray = [...state.filter_products];
+
+			switch (state.sorting_val) {
+				case 'a-z': {
+					newSortData = tempArray.sort((a, b) => {
+						return a.name.localeCompare(b.name);
+					});
+
+					state.filter_products = newSortData;
+					break;
+				}
+				case 'z-a': {
+					newSortData = tempArray.sort((a, b) => {
+						return b.name.localeCompare(a.name);
+					});
+
+					state.filter_products = newSortData;
+					break;
+				}
+				case 'highest': {
+					newSortData = tempArray.sort((a, b) => {
+						return b.price - a.price;
+					});
+
+					state.filter_products = newSortData;
+					break;
+				}
+
+				default: {
+					newSortData = tempArray.sort((a, b) => {
+						return a.price - b.price;
+					});
+
+					state.filter_products = newSortData;
+					break;
+				}
+			}
+		},
 	},
 });
 
-export const { loadFilterProds, setView, getSortVal } = filterSlice.actions;
+export const { loadFilterProds, setView, getSortVal, sortingProducts } =
+	filterSlice.actions;
 
 export default filterSlice.reducer;
