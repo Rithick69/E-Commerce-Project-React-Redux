@@ -24,41 +24,22 @@ const filterSlice = createSlice({
 			let newSortData;
 			let tempArray = [...state.filter_products];
 
-			switch (state.sorting_val) {
-				case 'a-z': {
-					newSortData = tempArray.sort((a, b) => {
+			newSortData = tempArray.sort((a, b) => {
+				switch (state.sorting_val) {
+					case 'a-z':
 						return a.name.localeCompare(b.name);
-					});
 
-					state.filter_products = newSortData;
-					break;
-				}
-				case 'z-a': {
-					newSortData = tempArray.sort((a, b) => {
+					case 'z-a':
 						return b.name.localeCompare(a.name);
-					});
 
-					state.filter_products = newSortData;
-					break;
-				}
-				case 'highest': {
-					newSortData = tempArray.sort((a, b) => {
+					case 'highest':
 						return b.price - a.price;
-					});
 
-					state.filter_products = newSortData;
-					break;
-				}
-
-				default: {
-					newSortData = tempArray.sort((a, b) => {
+					default:
 						return a.price - b.price;
-					});
-
-					state.filter_products = newSortData;
-					break;
 				}
-			}
+			});
+			state.filter_products = newSortData;
 		},
 	},
 });

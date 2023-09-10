@@ -14,10 +14,8 @@ const Sort = () => {
 		return store.filterProd;
 	});
 
-	const sorting = () => {
-		let el = document.getElementById('sort');
-
-		let sort_value = el.options[el.selectedIndex].value;
+	const sorting = (e) => {
+		let sort_value = e.target.value;
 		dispatch(
 			getSortVal({
 				sortVal: sort_value,
@@ -56,8 +54,11 @@ const Sort = () => {
 						className="sort-selection--style"
 						name="sort"
 						id="sort"
-						onClick={() => sorting()}
+						onClick={(e) => sorting(e)}
 					>
+						<option value="#" selected disabled hidden>
+							Sort By
+						</option>
 						<option className="sort-select--option" value="lowest">
 							Price(lowest)
 						</option>
