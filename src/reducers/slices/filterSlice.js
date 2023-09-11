@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const filterSlice = createSlice({
 	name: 'filter',
@@ -7,6 +7,9 @@ const filterSlice = createSlice({
 		all_products: [],
 		grid_view: true,
 		sorting_val: 'lowest',
+		filters: {
+			searchText: '',
+		},
 	},
 	reducers: {
 		loadFilterProds(state, action) {
@@ -41,10 +44,35 @@ const filterSlice = createSlice({
 			});
 			state.filter_products = newSortData;
 		},
+		updateFilter(state, action) {
+			let { name, value } = action.payload;
+			let newFilters = { ...state.filters, [name]: value };
+			state.filters = newFilters;
+		},
+		renderFilterProducts(state) {
+			let { searchText } = state.filters;
+			let tempArr = [...current(state.all_products)];
+			tempArr = tempArr.filter((item) => {
+				if (searchText) {
+					return item.name.toLowerCase().includes(searchText);
+				}
+				return item;
+			});
+
+			console.log(tempArr);
+
+			state.filter_products = tempArr;
+		},
 	},
 });
 
-export const { loadFilterProds, setView, getSortVal, sortingProducts } =
-	filterSlice.actions;
+export const {
+	loadFilterProds,
+	setView,
+	getSortVal,
+	sortingProducts,
+	updateFilter,
+	renderFilterProducts,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;
