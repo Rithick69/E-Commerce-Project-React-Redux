@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 const FilterSection = () => {
 	const {
 		filters: { searchText },
+		all_products,
 	} = useSelector((store) => {
 		return store.filterProd;
 	});
@@ -25,6 +26,17 @@ const FilterSection = () => {
 		);
 	};
 
+	const getUniqueData = (data, prop) => {
+		let newVal = data.map((curr) => {
+			return curr[prop];
+		});
+
+		newVal = ['All', ...new Set(newVal)];
+		return newVal;
+	};
+
+	const categoryData = getUniqueData(all_products, 'category');
+
 	useEffect(() => {
 		dispatch(renderFilterProducts());
 	}, [searchText, dispatch]);
@@ -37,6 +49,7 @@ const FilterSection = () => {
 						type="text"
 						name="searchText"
 						value={searchText}
+						placeholder="Search"
 						onChange={updateFilterValue}
 					/>
 				</form>
@@ -60,6 +73,11 @@ const Wrapper = styled.section`
 		input {
 			padding: 0.6rem 1rem;
 			width: 80%;
+		}
+
+		input,
+		textarea {
+			border: 1px solid black;
 		}
 	}
 
