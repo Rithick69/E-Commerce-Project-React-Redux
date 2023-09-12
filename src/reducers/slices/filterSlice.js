@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const filterSlice = createSlice({
 	name: 'filter',
@@ -51,15 +51,13 @@ const filterSlice = createSlice({
 		},
 		renderFilterProducts(state) {
 			let { searchText } = state.filters;
-			let tempArr = [...current(state.all_products)];
+			let tempArr = [...state.all_products];
 			tempArr = tempArr.filter((item) => {
 				if (searchText) {
 					return item.name.toLowerCase().includes(searchText);
 				}
 				return item;
 			});
-
-			console.log(tempArr);
 
 			state.filter_products = tempArr;
 		},
