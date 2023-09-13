@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const FilterSection = () => {
 	const {
-		filters: { searchText },
+		filters: { searchText, category },
 		all_products,
 	} = useSelector((store) => {
 		return store.filterProd;
@@ -18,6 +18,7 @@ const FilterSection = () => {
 
 	const updateFilterValue = (e) => {
 		let { name, value } = e.target;
+		console.log(name);
 		dispatch(
 			updateFilter({
 				name: name,
@@ -36,10 +37,15 @@ const FilterSection = () => {
 	};
 
 	const categoryData = getUniqueData(all_products, 'category');
+	const companyData = getUniqueData(all_products, 'company');
+
+	// useEffect(() => {
+	// 	dispatch(renderFilterProducts());
+	// }, [category, dispatch]);
 
 	useEffect(() => {
 		dispatch(renderFilterProducts());
-	}, [searchText, dispatch]);
+	}, [searchText, category, dispatch]);
 
 	return (
 		<Wrapper>
@@ -52,6 +58,45 @@ const FilterSection = () => {
 						placeholder="Search"
 						onChange={updateFilterValue}
 					/>
+				</form>
+			</div>
+			<div className="filter-category">
+				<h3>Category</h3>
+				<div>
+					{categoryData.map((curr, idx) => {
+						return (
+							<button
+								type="button"
+								name="category"
+								key={idx}
+								value={curr}
+								className={curr === category ? 'active' : ''}
+								onClick={updateFilterValue}
+							>
+								{curr}
+							</button>
+						);
+					})}
+				</div>
+			</div>
+			<div className="filter-company">
+				<h3>Company</h3>
+
+				<form action="#">
+					<select
+						name="company"
+						id="company"
+						className="filter-company--select"
+						onClick={updateFilterValue}
+					>
+						{companyData.map((curElem, index) => {
+							return (
+								<option key={index} value={curElem} name="company">
+									{curElem}
+								</option>
+							);
+						})}
+					</select>
 				</form>
 			</div>
 		</Wrapper>
@@ -101,16 +146,27 @@ const Wrapper = styled.section`
 
 			.active {
 				border-bottom: 1px solid #000;
-				color: ${({ theme }) => theme.colors.btn};
 			}
 		}
 	}
 
-	.filter-company--select {
-		padding: 0.3rem 1.2rem;
-		font-size: 1.6rem;
-		color: ${({ theme }) => theme.colors.text};
-		text-transform: capitalize;
+	.filter-company--selection .filter-company--selection--style {
+		padding: 0.5rem;
+		cursor: pointer;
+		background-color: #fff;
+		border: 1px solid black;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+		&:focus {
+			border: 2px solid black;
+		}
+
+		.filter-company--select {
+			padding: 0.3rem 1.2rem;
+			font-size: 1.6rem;
+			color: ${({ theme }) => theme.colors.text};
+			text-transform: capitalize;
+		}
 	}
 
 	.filter-color-style {

@@ -9,6 +9,8 @@ const filterSlice = createSlice({
 		sorting_val: 'lowest',
 		filters: {
 			searchText: '',
+			category: '',
+			company: '',
 		},
 	},
 	reducers: {
@@ -50,11 +52,21 @@ const filterSlice = createSlice({
 			state.filters = newFilters;
 		},
 		renderFilterProducts(state) {
-			let { searchText } = state.filters;
+			let { searchText, category, company } = state.filters;
 			let tempArr = [...state.all_products];
 			tempArr = tempArr.filter((item) => {
 				if (searchText) {
 					return item.name.toLowerCase().includes(searchText);
+				}
+				if (category) {
+					if (category != 'All') {
+						return item.category === category;
+					}
+				}
+
+				if (company) {
+					if (company !== 'All')
+						return item.company.toLowerCase() === company.toLowerCase();
 				}
 				return item;
 			});
