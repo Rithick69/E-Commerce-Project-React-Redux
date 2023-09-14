@@ -54,7 +54,7 @@ const Sort = () => {
 						className="sort-selection--style"
 						name="sort"
 						id="sort"
-						onClick={(e) => sorting(e)}
+						onChange={(e) => sorting(e)}
 					>
 						<option value="#" selected disabled hidden>
 							Sort By
