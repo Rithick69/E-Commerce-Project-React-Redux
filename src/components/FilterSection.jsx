@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const FilterSection = () => {
 	const {
-		filters: { searchText, category },
+		filters: { searchText, category, company, color },
 		all_products,
 	} = useSelector((store) => {
 		return store.filterProd;
@@ -18,7 +18,9 @@ const FilterSection = () => {
 
 	const updateFilterValue = (e) => {
 		let { name, value } = e.target;
-		console.log(name);
+		// console.log(e.target);
+		// console.log(name);
+		// console.log(value);
 		dispatch(
 			updateFilter({
 				name: name,
@@ -32,12 +34,22 @@ const FilterSection = () => {
 			return curr[prop];
 		});
 
+		if (prop === 'colors') {
+			// Union
+			// return (newVal = ['All', ...new Set([].concat(...newVal))]);
+			// We can also use Flat method().
+			newVal = newVal.flat();
+		}
+
 		newVal = ['All', ...new Set(newVal)];
 		return newVal;
 	};
 
 	const categoryData = getUniqueData(all_products, 'category');
 	const companyData = getUniqueData(all_products, 'company');
+	const colorsData = getUniqueData(all_products, 'colors');
+
+	console.log(colorsData);
 
 	// useEffect(() => {
 	// 	dispatch(renderFilterProducts());
@@ -45,7 +57,7 @@ const FilterSection = () => {
 
 	useEffect(() => {
 		dispatch(renderFilterProducts());
-	}, [searchText, category, dispatch]);
+	}, [searchText, category, company, color, dispatch]);
 
 	return (
 		<Wrapper>
@@ -81,23 +93,44 @@ const FilterSection = () => {
 			</div>
 			<div className="filter-company">
 				<h3>Company</h3>
-
-				<form action="#">
-					<select
-						name="company"
-						id="company"
-						className="filter-company--select"
-						onClick={updateFilterValue}
-					>
-						{companyData.map((curElem, index) => {
-							return (
-								<option key={index} value={curElem} name="company">
-									{curElem}
-								</option>
-							);
-						})}
-					</select>
-				</form>
+				<div className="filter-company--selection">
+					<form action="#">
+						<select
+							name="company"
+							id="company"
+							className="filter-company--selection--style"
+							onChange={updateFilterValue}
+						>
+							{companyData.map((curElem, index) => {
+								return (
+									<option key={index} value={curElem}>
+										{curElem.toUpperCase()}
+									</option>
+								);
+							})}
+						</select>
+					</form>
+				</div>
+			</div>
+			<div className="filter-colors colors">
+				<h3>Colors</h3>
+				<div className="filter-color-style">
+					{colorsData.map((curr, idx) => {
+						return (
+							<button
+								key={idx}
+								type="button"
+								name="color"
+								className="btnStyle"
+								style={{ backgroundColor: curr }}
+								value={curr}
+								onClick={updateFilterValue}
+							>
+								{color === curr ? '' : null}
+							</button>
+						);
+					})}
+				</div>
 			</div>
 		</Wrapper>
 	);
