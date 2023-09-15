@@ -12,6 +12,9 @@ const filterSlice = createSlice({
 			category: 'all',
 			company: 'all',
 			color: 'all',
+			price: 0,
+			maxPrice: 0,
+			minPrice: 0,
 		},
 	},
 	reducers: {
@@ -19,6 +22,10 @@ const filterSlice = createSlice({
 			let { products } = action.payload;
 			state.filter_products = [...products];
 			state.all_products = [...products];
+			let prices = products.map((curr) => curr.price);
+			let max = Math.max(...prices);
+			state.filters.maxPrice = max;
+			state.filters.price = max;
 		},
 		setView(state, action) {
 			state.grid_view = action.payload.grid_view;
@@ -52,26 +59,49 @@ const filterSlice = createSlice({
 			let newFilters = { ...state.filters, [name]: value };
 			state.filters = newFilters;
 		},
+		clearFiltersRed(state) {
+			state.filters = {
+				...state.filters,
+				searchText: '',
+				category: 'all',
+				company: 'all',
+				color: 'all',
+				maxprice: 0,
+				price: state.filters.maxPrice,
+				minPrice: 0,
+			};
+		},
 		renderFilterProducts(state) {
-			let { searchText, category, company, color } = state.filters;
+			let { searchText, category, company, color, price } = state.filters;
 			let tempArr = [...state.all_products];
-			tempArr = tempArr.filter((item) => {
-				if (searchText) {
+			if (searchText) {
+				tempArr = tempArr.filter((item) => {
 					return item.name.toLowerCase().includes(searchText);
-				}
-				if (category.toLowerCase() !== 'all') {
+				});
+			}
+			if (category.toLowerCase() !== 'all') {
+				tempArr = tempArr.filter((item) => {
 					return item.category === category;
-				}
+				});
+			}
 
-				if (company.toLowerCase() !== 'all') {
+			if (company.toLowerCase() !== 'all') {
+				tempArr = tempArr.filter((item) => {
 					return item.company.toLowerCase() === company.toLowerCase();
-				}
+				});
+			}
 
-				if (color.toLowerCase() !== 'all') {
+			if (color.toLowerCase() !== 'all') {
+				tempArr = tempArr.filter((item) => {
 					return item.colors.includes(color);
-				}
-				return item;
-			});
+				});
+			}
+
+			if (price) {
+				tempArr = tempArr.filter((item) => {
+					return item.price <= Number(price);
+				});
+			}
 
 			state.filter_products = tempArr;
 		},
@@ -85,6 +115,7 @@ export const {
 	sortingProducts,
 	updateFilter,
 	renderFilterProducts,
+	clearFiltersRed,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

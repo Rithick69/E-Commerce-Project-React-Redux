@@ -3,12 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	updateFilter,
 	renderFilterProducts,
+	clearFiltersRed,
 } from '../reducers/slices/filterSlice';
 import { useEffect } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import FormatPrice from '../helpers/FormatPrice';
+import { Button } from '../styles/Button';
 
 const FilterSection = () => {
 	const {
-		filters: { searchText, category, company, color },
+		filters: {
+			searchText,
+			category,
+			company,
+			color,
+			price,
+			maxPrice,
+			minPrice,
+		},
 		all_products,
 	} = useSelector((store) => {
 		return store.filterProd;
@@ -18,9 +30,6 @@ const FilterSection = () => {
 
 	const updateFilterValue = (e) => {
 		let { name, value } = e.target;
-		// console.log(e.target);
-		// console.log(name);
-		// console.log(value);
 		dispatch(
 			updateFilter({
 				name: name,
@@ -49,15 +58,13 @@ const FilterSection = () => {
 	const companyData = getUniqueData(all_products, 'company');
 	const colorsData = getUniqueData(all_products, 'colors');
 
-	console.log(colorsData);
-
-	// useEffect(() => {
-	// 	dispatch(renderFilterProducts());
-	// }, [category, dispatch]);
+	const clearFilters = () => {
+		dispatch(clearFiltersRed());
+	};
 
 	useEffect(() => {
 		dispatch(renderFilterProducts());
-	}, [searchText, category, company, color, dispatch]);
+	}, [searchText, category, company, color, price, dispatch]);
 
 	return (
 		<Wrapper>
@@ -116,21 +123,54 @@ const FilterSection = () => {
 				<h3>Colors</h3>
 				<div className="filter-color-style">
 					{colorsData.map((curr, idx) => {
+						if (curr.toLowerCase() === 'all') {
+							return (
+								<button
+									key={idx}
+									type="button"
+									name="color"
+									className="color-all--style"
+									value={curr}
+									onClick={updateFilterValue}
+								>
+									All
+								</button>
+							);
+						}
 						return (
 							<button
 								key={idx}
 								type="button"
 								name="color"
-								className="btnStyle"
+								className={color === curr ? 'btnStyle active' : 'btnStyle'}
 								style={{ backgroundColor: curr }}
 								value={curr}
 								onClick={updateFilterValue}
 							>
-								{color === curr ? '' : null}
+								{color === curr && <FaCheck className="checkStyle" />}
 							</button>
 						);
 					})}
 				</div>
+			</div>
+			<div className="filter_price">
+				<h3>Price</h3>
+				<p>
+					<FormatPrice price={price} />
+				</p>
+				<input
+					type="range"
+					name="price"
+					min={minPrice}
+					max={maxPrice}
+					value={price}
+					onChange={updateFilterValue}
+				/>
+			</div>
+			<div className="filter-clear">
+				<Button className="btn" onClick={clearFilters}>
+					clear filters
+				</Button>
 			</div>
 		</Wrapper>
 	);
