@@ -10,6 +10,7 @@ import storage from 'redux-persist/lib/storage';
 import productsSlice from './reducers/slices/productsSlice';
 import singleProdSlice from './reducers/slices/singleProdSlice';
 import filterSlice from './reducers/slices/filterSlice';
+import cartSlice from './reducers/slices/cartSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
 	products: productsSlice,
 	singleProd: singleProdSlice,
 	filterProd: filterSlice,
+	cartProd: cartSlice,
 	// We can add more slices here
 });
 

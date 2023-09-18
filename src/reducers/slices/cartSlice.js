@@ -11,6 +11,17 @@ const cartSlice = createSlice({
 	reducers: {
 		addToCart(state, action) {
 			let { id, color, quantity, product } = action.payload;
+			let cartProduct = {
+				id: id + color,
+				name: product.name,
+				color,
+				quantity,
+				image: product.image[0].url,
+				price: product.price,
+				max: product.stock,
+			};
+			state.cart = [...state.cart, cartProduct];
+			// state.cart = state.cart.concat(cartProduct);
 		},
 	},
 });
