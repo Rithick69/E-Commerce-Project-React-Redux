@@ -2,18 +2,22 @@
 import FormatPrice from '../helpers/FormatPrice';
 import CartAmountToggle from './CartAmountToggle';
 import { FaTrash } from 'react-icons/fa';
-import { removeCartItem } from '../reducers/slices/cartSlice';
+import {
+	removeCartItem,
+	decreaseQuantity,
+	increaseQuantity,
+} from '../reducers/slices/cartSlice';
 import { useDispatch } from 'react-redux';
 
 const CartItem = ({ id, name, image, color, price, quantity }) => {
+	const dispatch = useDispatch();
+
 	const setDecrease = () => {
-		// quantity > 1 ? setQuantity((q) => q - 1) : setQuantity(1);
+		dispatch(decreaseQuantity({ id }));
 	};
 	const setIncrease = () => {
-		// quantity < stock ? setQuantity((q) => q + 1) : setQuantity(stock);
+		dispatch(increaseQuantity({ id }));
 	};
-
-	const dispatch = useDispatch();
 
 	const removeItem = (id) => {
 		dispatch(
