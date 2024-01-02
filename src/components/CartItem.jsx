@@ -26,6 +26,7 @@ const CartItem = ({ id, name, image, color, price, quantity }) => {
 			})
 		);
 	};
+
 	return (
 		<>
 			<div className="cart_heading grid grid-five-column">

@@ -3,9 +3,14 @@ import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { CgMenu, CgClose } from 'react-icons/cg';
 import { FiShoppingCart } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
+
 
 const Navbar = () => {
 	const [openMenu, setOpenMenu] = useState(false);
+	const { total_items } = useSelector((store) => {
+		return store.cartProd;
+	});
 
 	useEffect(() => {
 		function updateSize() {
@@ -18,7 +23,75 @@ const Navbar = () => {
 		return () => window.removeEventListener('resize', updateSize);
 	}, [openMenu]);
 
-	const Nav = styled.nav`
+	return (
+		<Nav>
+			<div className={openMenu ? 'menuIcon active' : 'menuIcon'}>
+				<ul className="navbar-list">
+					<li>
+						<NavLink
+							className="navbar-link"
+							to="/"
+							onClick={() => setOpenMenu(false)}
+						>
+							Home
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
+							className="navbar-link"
+							to="/about"
+							onClick={() => setOpenMenu(false)}
+						>
+							About
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
+							className="navbar-link"
+							to="/products"
+							onClick={() => setOpenMenu(false)}
+						>
+							Products
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
+							className="navbar-link"
+							to="/contact"
+							onClick={() => setOpenMenu(false)}
+						>
+							Contact
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
+							className="navbar-link cart-trolley--link"
+							to="/cart"
+							onClick={() => setOpenMenu(false)}
+						>
+							<FiShoppingCart className="cart-trolley" />
+							<span className="cart-total--item">{total_items}</span>
+						</NavLink>
+					</li>
+				</ul>
+				<div className="mobile-navbar-btn">
+					<CgMenu
+						name="menu-outline"
+						className="mobile-nav-icon"
+						onClick={() => setOpenMenu(true)}
+					/>
+					<CgClose
+						name="close-outline"
+						className="close-outline mobile-nav-icon"
+						onClick={() => setOpenMenu(false)}
+					/>
+				</div>
+			</div>
+		</Nav>
+	);
+};
+
+const Nav = styled.nav`
 		.navbar-list {
 			display: flex;
 			gap: 4.8rem;
@@ -192,72 +265,5 @@ const Navbar = () => {
 			}
 		}
 	`;
-	return (
-		<Nav>
-			<div className={openMenu ? 'menuIcon active' : 'menuIcon'}>
-				<ul className="navbar-list">
-					<li>
-						<NavLink
-							className="navbar-link"
-							to="/"
-							onClick={() => setOpenMenu(false)}
-						>
-							Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							className="navbar-link"
-							to="/about"
-							onClick={() => setOpenMenu(false)}
-						>
-							About
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							className="navbar-link"
-							to="/products"
-							onClick={() => setOpenMenu(false)}
-						>
-							Products
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							className="navbar-link"
-							to="/contact"
-							onClick={() => setOpenMenu(false)}
-						>
-							Contact
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							className="navbar-link cart-trolley--link"
-							to="/cart"
-							onClick={() => setOpenMenu(false)}
-						>
-							<FiShoppingCart className="cart-trolley" />
-							<span className="cart-total--item">10</span>
-						</NavLink>
-					</li>
-				</ul>
-				<div className="mobile-navbar-btn">
-					<CgMenu
-						name="menu-outline"
-						className="mobile-nav-icon"
-						onClick={() => setOpenMenu(true)}
-					/>
-					<CgClose
-						name="close-outline"
-						className="close-outline mobile-nav-icon"
-						onClick={() => setOpenMenu(false)}
-					/>
-				</div>
-			</div>
-		</Nav>
-	);
-};
 
 export default Navbar;
