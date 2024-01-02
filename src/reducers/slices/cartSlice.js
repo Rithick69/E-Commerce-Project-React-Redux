@@ -4,9 +4,9 @@ const cartSlice = createSlice({
 	name: 'singleProd',
 	initialState: {
 		cart: [],
-		total_item: '',
-		total_quantity: '',
-		shipping_fee: 500,
+		total_items: 0,
+		total_price: 0,
+		shipping_fee: 50000,
 	},
 	reducers: {
 		addToCart(state, action) {
@@ -88,7 +88,26 @@ const cartSlice = createSlice({
 		},
 		clearCart(state) {
 			state.cart = [];
+			state.total_items = 0;
+			state.total_price = 0;
 		},
+		cartTotalItems(state){
+			let {totalPrice, totalItems} = state.cart.reduce((accum, curr) => {
+
+				let { quantity, price } = curr;
+
+				accum.totalItems += quantity;
+				accum.totalPrice += price * quantity;
+
+				return accum;
+			}, {
+				totalPrice: 0,
+				totalItems: 0
+			});
+
+			state.total_price = totalPrice;
+			state.total_items = totalItems;
+		}
 	},
 });
 
@@ -98,6 +117,7 @@ export const {
 	clearCart,
 	decreaseQuantity,
 	increaseQuantity,
+	cartTotalItems
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

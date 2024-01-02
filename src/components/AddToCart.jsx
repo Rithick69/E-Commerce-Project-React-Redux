@@ -1,18 +1,19 @@
 /* eslint-disable react/prop-types */
 import { styled } from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import CartAmountToggle from './CartAmountToggle';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../styles/Button';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../reducers/slices/cartSlice';
+import { addToCart, cartTotalItems } from '../reducers/slices/cartSlice';
 
 const AddToCart = ({ prods }) => {
 	const { id, stock, colors } = prods;
 
 	const [color, setColor] = useState(colors[0]);
 	const [quantity, setQuantity] = useState(1);
+	const [moveToCart, setMoveToCart] = useState(false);
 
 	const setDecrease = () => {
 		quantity > 1 ? setQuantity((q) => q - 1) : setQuantity(1);
@@ -24,6 +25,7 @@ const AddToCart = ({ prods }) => {
 	const dispatch = useDispatch();
 
 	const addCart = (id, color, quantity, product) => {
+		setMoveToCart(true)
 		dispatch(
 			addToCart({
 				id,
@@ -33,6 +35,12 @@ const AddToCart = ({ prods }) => {
 			})
 		);
 	};
+
+	useEffect(()=>{
+		if(moveToCart) {
+			dispatch(cartTotalItems());
+		}
+	}, [dispatch, moveToCart])
 
 	return (
 		<Wrapper>

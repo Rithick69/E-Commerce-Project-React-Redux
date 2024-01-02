@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import CartItem from '../components/CartItem';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../styles/Button';
-import { clearCart } from '../reducers/slices/cartSlice';
+import { clearCart, cartTotalItems } from '../reducers/slices/cartSlice';
+import { useEffect } from 'react';
+import FormatPrice from '../helpers/FormatPrice';
 
 const Cart = () => {
-	const { cart } = useSelector((store) => {
+	const { cart, total_price, shipping_fee } = useSelector((store) => {
 		return store.cartProd;
 	});
 
@@ -16,6 +18,10 @@ const Cart = () => {
 	const handleClearCart = () => {
 		dispatch(clearCart());
 	};
+
+	useEffect(()=>{
+			dispatch(cartTotalItems());
+	}, [dispatch, cart]);
 
 	if (cart.length === 0) {
 		return (
@@ -30,9 +36,9 @@ const Cart = () => {
 			<div className="container">
 				<div className="cart_heading grid grid-five-column">
 					<p>Item</p>
-					<p className="cart_hide">Price</p>
+					<p className="cart-hide">Price</p>
 					<p>Quantity</p>
-					<p className="cart_hide">Subtotal</p>
+					<p className="cart-hide">Subtotal</p>
 					<p>Remove</p>
 				</div>
 				<hr />
@@ -49,6 +55,23 @@ const Cart = () => {
 					<Button className="btn btn-clear" onClick={handleClearCart}>
 						Clear Cart
 					</Button>
+				</div>
+				<div className="order-total--amount">
+					<div className="order-total--subdata">
+						<div>
+							<p>Subtotal: </p>
+							<p><FormatPrice price={total_price}/></p>
+						</div>
+						<div>
+							<p>Shipping: </p>
+							<p><FormatPrice price={shipping_fee}/></p>
+						</div>
+						<hr/>
+						<div>
+							<p>Order Total:</p>
+							<p><FormatPrice price={total_price + shipping_fee}/></p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</Wrapper>
@@ -200,7 +223,7 @@ const Wrapper = styled.section`
 		}
 
 		div:last-child {
-			background-color: #fafafa;
+			background-color: #f1eded;
 		}
 
 		div p:last-child {
