@@ -65,6 +65,15 @@ const Navbar = () => {
 					</li>
 					<li>
 						<NavLink
+							className="navbar-link"
+							to="/login"
+							onClick={() => setOpenMenu(false)}
+						>
+							Login
+						</NavLink>
+					</li>
+					<li>
+						<NavLink
 							className="navbar-link cart-trolley--link"
 							to="/cart"
 							onClick={() => setOpenMenu(false)}

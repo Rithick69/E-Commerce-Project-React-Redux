@@ -2,15 +2,17 @@
 // configureStore accepts a single configuration object parameter.
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import heroSlice from './reducers/slices/heroSlice';
 
 import { persistStore, persistReducer } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
+
+import heroSlice from './reducers/slices/heroSlice';
 import productsSlice from './reducers/slices/productsSlice';
 import singleProdSlice from './reducers/slices/singleProdSlice';
 import filterSlice from './reducers/slices/filterSlice';
 import cartSlice from './reducers/slices/cartSlice';
+import authSlice from './reducers/slices/authSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -23,6 +25,7 @@ const rootReducer = combineReducers({
 	singleProd: singleProdSlice,
 	filterProd: filterSlice,
 	cartProd: cartSlice,
+	authUser: authSlice,
 	// We can add more slices here
 });
 

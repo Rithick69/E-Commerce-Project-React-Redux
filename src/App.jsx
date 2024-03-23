@@ -13,6 +13,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { useDispatch } from 'react-redux';
 import { fetchData } from './reducers/slices/productsSlice';
+import Login from './views/Login';
+import Registration from './views/Register';
 
 const App = () => {
 	const theme = {
@@ -59,6 +61,8 @@ const App = () => {
 						<Route path="/products" element={<Products />} />
 						<Route path="/product/:id" element={<Product />} />
 						<Route path="/cart" element={<Cart />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/registration" element={<Registration />} />
 						<Route path="*" element={<Error />} />
 					</Routes>
 					<Footer />
