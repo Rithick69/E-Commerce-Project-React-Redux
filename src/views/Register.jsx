@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 const Registration = () => {
     const [username, setUsername] = useState("");
-    const [details, setDetails] = useState({ phone: '', email: '', password: '' });
+    const [details, setDetails] = useState({ fName: '', lName: '', phone: '', email: '', password: '' });
 
     // const dispatch = useDispatch();
 
@@ -31,14 +31,20 @@ const Registration = () => {
                     <h2>Sign Up!</h2>
                     <form onSubmit={handleSubmit}>
                         <div className='pDetails'>
-                            <input type="text" name="username" value={username} placeholder='Enter Username...' onChange={handleNameChange} />
-                            <input type="text" name="phone" value={details.phone} placeholder='Enter Phone No.' onChange={handleChange} />
+                            <input type="text" name="fName" value={details.fName} placeholder='First Name...' onChange={handleChange} />
+                            <input type="text" name="lName" value={details.lName} placeholder='Last Name...' onChange={handleChange} />
                         </div>
+
                         <div className='validEmail'>
-                            <input type='email' name="email" value={details.email} placeholder='Enter Email...' onChange={handleChange} />
+                            <input type='email' name="email" value={details.email} placeholder='Email...' onChange={handleChange} />
                         </div>
+                        <div className='pDetails'>
+                            <input type="text" name="username" value={username} placeholder='Username...' onChange={handleNameChange} />
+                            <input type="text" name="phone" value={details.phone} placeholder='Phone No.' onChange={handleChange} />
+                        </div>
+
                         <div className='validPass'>
-                            <input type='password' name="password" value={details.password} placeholder='Enter Password...' onChange={handleChange} />
+                            <input type='password' name="password" value={details.password} placeholder='Password...' onChange={handleChange} />
                         </div>
                         <Button className="btn" type='submit'>Sign Up</Button>
                     </form>
@@ -58,7 +64,7 @@ const Wrapper = styled.section`
 
         .container {
             width: 30%;
-            height: 70vh;
+            height: 80vh;
             text-transform:capitalize;
             background: #fff;
             border-radius: 10px;
