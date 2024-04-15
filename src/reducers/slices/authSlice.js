@@ -26,6 +26,7 @@ const authSlice = createSlice({
 		refreshToken: '',
 		error: '',
 		userId: '',
+		isLoggedIn: false,
 	},
 	reducers: {},
 	extraReducers(builder) {
@@ -43,12 +44,14 @@ const authSlice = createSlice({
 			state.token = accessToken;
 			state.refreshToken = refreshToken;
 			state.msg = msg;
+			state.isLoggedIn = true;
 		});
 		builder.addCase(signinFunc.rejected, (state, action) => {
 			state.isLoading = false;
 			state.isError = true;
 			state.error = action.payload.error;
 			state.msg = 'Failed to log in.';
+			state.isLoggedIn = false;
 			console.log('Error', action.payload);
 		});
 	},

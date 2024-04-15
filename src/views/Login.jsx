@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Button } from '../styles/Button';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { signinFunc } from '../reducers/slices/authSlice';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
+    const { isLoggedIn } = useSelector((store) => {
+		return store.signIn;
+    });
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -19,6 +24,13 @@ const Login = () => {
         dispatch(signinFunc(credentials));
         console.log(credentials)
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate(-1);
+        }
+
+    }, [isLoggedIn, navigate])
     return (
     <Wrapper>
             <div className='loginForm'>
