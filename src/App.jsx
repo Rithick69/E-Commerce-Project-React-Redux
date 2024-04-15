@@ -11,7 +11,7 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from './reducers/slices/productsSlice';
 import Login from './views/Login';
 import Registration from './views/Register';
@@ -42,11 +42,22 @@ const App = () => {
 		},
 	};
 
+	const { token, refreshToken } = useSelector((store) => {
+		return store.signIn;
+	});
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(fetchData());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (token && refreshToken) {
+			sessionStorage.setItem('token', token);
+			sessionStorage.setItem('refreshToken', refreshToken);
+		}
+	}, [token, refreshToken]);
 
 	return (
 		<>
